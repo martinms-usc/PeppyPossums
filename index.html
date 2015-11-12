@@ -1,13 +1,88 @@
 <!DOCTYPE html>
-<html>
+<html ng-app="WGLR">
 <head>
   <title>WGLR</title>
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css" integrity="sha512-dTfge/zgoMYpP7QbHy4gWMEGsbsdZeCXz7irItjcC3sPUFtf0kuFbDz/ixG7ArTxmDjLXDmezHubeNikyKGVyQ==" crossorigin="anonymous">
+
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css" integrity="sha512-dTfge/zgoMYpP7QbHy4gWMEGsbsdZeCXz7irItjcC3sPUFtf0kuFbDz/ixG7ArTxmDjLXDmezHubeNikyKGVyQ==" crossorigin="anonymous">
+    <link rel="stylesheet" type="text/css" href="stylesheet.css">
 
 </head>
-<body>
-<h1> Welcome to Wiggler</h1>
-<h2> hey mike </h2>
+
+
+<body ng-controller="cory">
+  <nav>
+  <ul class="nav nav-pills pull-right">
+  </nav>
+    <div class="bg"></div>
+    <div class="jumbotron">
+      <h2>Welcome to Wiggler</h2>
+    <p class="lead">
+    </div>
+  <div class="container">
+
+
+    <div class="col-sm-4 col-sm-offset-4 text-center">
+      <form>
+        <div ng-controller="getZipCode">
+          <input type="text" class="form-control input-lg text-center" placeholder="type in a zipcode" ng-model="zipCode">
+        </div>
+
+        <button type="submit" class="btn btn-primary btn-lg" ng-click="sendZipCode(zipCode)"> Get me to a roof </button>
+      </form>
+    </div>
+    <br>
+   </div>
+
+    <div class="col-lg-6  text-center" >
+
+      <ul ng-repeat="item in list">
+
+          <div class="row">
+              <h2>Page Content</h2>
+              Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis pharetra varius quam sit amet vulputate.
+              Quisque mauris augue, molestie tincidunt condimentum vitae, gravida a libero. Aenean sit amet felis
+              dolor, in sagittis nisi. Sed ac orci quis tortor imperdiet venenatis. Duis elementum auctor accumsan.
+              Aliquam in felis sit amet augue.
+
+            </div>
+            <hr>
+            <div class="row">
+              <h2>Page Content</h2>
+              Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis pharetra varius quam sit amet vulputate.
+              Quisque mauris augue, molestie tincidunt condimentum vitae, gravida a libero. Aenean sit amet felis
+              dolor, in sagittis nisi. Sed ac orci quis tortor imperdiet venenatis. Duis elementum auctor accumsan.
+              Aliquam in felis sit amet augue.
+
+
+            </div>
+            <hr>
+            <div class="row">
+              <h2>Page Content</h2>
+              Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis pharetra varius quam sit amet vulputate.
+              Quisque mauris augue, molestie tincidunt condimentum vitae, gravida a libero. Aenean sit amet felis
+              dolor, in sagittis nisi. Sed ac orci quis tortor imperdiet venenatis. Duis elementum auctor accumsan.
+              Aliquam in felis sit amet augue.
+            </div>
+    </div>
+    </ul>
+    </div>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.5/angular.min.js"></script>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+
+     <script type="text/javascript">
+
+      var jumboHeight = $('.jumbotron').outerHeight();
+
+      function parallax(){
+          var scrolled = $(window).scrollTop();
+          $('.bg').css('height', (jumboHeight-scrolled) + 'px');
+      }
+
+      $(window).scroll(function(e){
+          parallax();});
+       </script>
 </body>
 
 
