@@ -1,0 +1,19 @@
+{
+  "name": "Rooftop-App",
+  "version": "0.0.0",
+  "description": "",
+  "main": "",
+  "scripts": {
+
+  },
+  "author": "",
+  "license": "",
+  "devDependencies": {
+  },
+  "dependencies": {
+    "body-parser": "^1.4.3",
+    "express": "^4.4.5",
+    "morgan": "^1.1.1",
+    "request": "^2.36.0"
+  }
+}
