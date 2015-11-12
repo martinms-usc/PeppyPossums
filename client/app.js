@@ -1,9 +1,18 @@
-angular.module('?', [])
+var myApp = angular.module('WGLR', ['appControllers']);
 
-.config(function($routeProvider, $httpProvider) {
-	$routerProvider
-	  .when('place route link here', {
-	  	templateUrl: 'place directory here',
-	  	controller: 'place controller here'
-	  });
-})
+myApp.config(function($stateProvider, $urlRouterProvider) {
+	$urlRouterProvider.
+	  otherwise('/main');
+	$stateProvider
+		.state('list', {
+			url: '/list',
+			controller: 'List',
+			templateUrl: 'partials/list.html'
+		})
+		.state('drinksmenu', {
+			url: 'list/drinksmenu',
+			controller: 'DrinksMenu',
+			templateUrl: 'partials/drinksmenu.html'
+		}
+});
+
