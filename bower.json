@@ -1,0 +1,16 @@
+{
+  "name": "Rooftop-App",
+  "version": "0.0.0",
+  "authors": [],
+  "license": "",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components"
+  ],
+  "dependencies": {
+    "angular": "~1.4.7",
+    "bootstrap": "~3.3.5",
+    "angular-ui-router": "~0.2.15"
+  }
+}
