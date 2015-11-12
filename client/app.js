@@ -7,12 +7,12 @@ myApp.config(function($stateProvider, $urlRouterProvider) {
 		.state('list', {
 			url: '/list',
 			controller: 'List',
-			templateUrl: 'partials/list.html'
+			templateUrl: 'views/list.html'
 		})
 		.state('drinksmenu', {
 			url: 'list/drinksmenu',
 			controller: 'DrinksMenu',
-			templateUrl: 'partials/drinksmenu.html'
+			templateUrl: 'views/drinksmenu.html'
 		}
 });
 
