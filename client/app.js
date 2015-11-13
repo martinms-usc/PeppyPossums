@@ -8,7 +8,7 @@ angular.module('WGLR', [])
     // var params = '{enter query}';
     return $http({
       method: 'POST',
-      url: '/',
+      url: '/list',
       headers: {
         "Content-Type": "application/JSON"
       },
