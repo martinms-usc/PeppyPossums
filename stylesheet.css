@@ -15,6 +15,9 @@
   text-shadow: #444 0 5px 5px;
   background:transparent;
 }
+    .list{
+      margin: 130px;
+    }
 
 /*.h3 .jumbotron {
   position: fixed;
