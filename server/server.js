@@ -20,13 +20,11 @@ router.use(function (req, res, next){
 })
 
 router.get('/', function(req, res) {
-  console.log('test');
   res.sendFile(path.join(__dirname + '/../index.html'));
 })
 
-router.post('/list', query.getList, function(req, res) {
-  console.log('about to send response, bars are ' + res.bars);
-  res.send()
+router.post('/list', query.getList, function(req, res, next) {
+  res.send(res.bars);
 })
 
 
@@ -38,7 +36,6 @@ router.post('/list', query.getList, function(req, res) {
 // router.post('/login', validatelogin, function(req, res) {
 //   res.send('processing login')
 // })
-
 
 
 // apply routes to application
