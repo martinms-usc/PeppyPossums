@@ -33,7 +33,7 @@ router.post('/list', query.getList, function(req, res, next) {
 //   res.send('this is the login page');
 // })
 
-// router.post('/login', validatelogin, function(req, res) {
+// router.post('/login', mid.validatelogin, function(req, res) {
 //   res.send('processing login')
 // })
 
