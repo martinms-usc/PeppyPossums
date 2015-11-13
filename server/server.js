@@ -2,42 +2,49 @@ var express = require('express');
 var path = require('path');
 var bodyParser  = require('body-parser');
 var request = require('request');
-var fire = require('firebase');
 var app = express();
 var Promise = require('bluebird');
-var Fireproof = require('fireproof')
-Fireproof.bless(Promise);
-
-
-var ref = new fire('https://rooftopapp.firebaseio.com/');
-var fireproof = new Fireproof(ref);
+var query = require('./queries.js');
+// var mid = require('./middleware.js');
 
 app.use(bodyParser.urlencoded({extended: true}));
 app.use(bodyParser.json());
+app.use(express.static(__dirname + '/..'));
 
-//update path names based on where index.html file is located
-// app.use(express.static(__dirname + '/..'));
-app.get('/', function(req, res) {
+
+var router = express.Router();
+// for every request, log the metadata
+router.use(function (req, res, next){
+  console.log('just got the ' + req.method + 'request to ' + req.url);
+  next();
+})
+
+router.get('/', function(req, res) {
   console.log('test');
   res.sendFile(path.join(__dirname + '/../index.html'));
 })
 
-app.post('/', function(req, res) {
-   // console.log(res.bars);
-  res.bars = []
-  // console.log(req.body);
-  // console.log(JSON.parse(req.body));
-  fireproof.orderByChild('location/city').equalTo('Los Angeles').on('child_added', function(snapshot) {
-    // console.log(snapshot.val().name);
-    res.bars.push(snapshot.val().name);
-  }).then(function() {
-    console.log(res.bars)
-    res.send(res.bars);
-  }, function(err) {
-    console.error(err);
-  })
-
+router.post('/list', query.getList, function(req, res) {
+  console.log('about to send response, bars are ' + res.bars);
+  res.send()
 })
 
+
+// FUTURE LOGIN ROUTES
+// router.get('/login', function(req, res) {
+//   res.send('this is the login page');
+// })
+
+// router.post('/login', validatelogin, function(req, res) {
+//   res.send('processing login')
+// })
+
+
+
+// apply routes to application
+app.use('/', router);
+
 app.listen(3000);
+
 module.exports = app;
+
