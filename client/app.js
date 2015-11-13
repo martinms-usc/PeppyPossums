@@ -2,6 +2,8 @@ angular.module('WGLR', [])
 
 .controller('appController', function($scope, $http) {
 
+  $scope.list = [];
+
   $scope.sendZipCode  = function(zipCode) {
     // var params = '{enter query}';
     return $http({
@@ -10,9 +12,10 @@ angular.module('WGLR', [])
       headers: {
         "Content-Type": "application/JSON"
       },
-      data: zipCode
-    }).then(function(data) {
-      console.log("called");
+      data: {zipCode: zipCode}
+    }).then(function(res) {
+      console.log(res.data);
+      $scope.list = res.data
     });
   };
 
