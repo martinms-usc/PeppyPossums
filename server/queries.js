@@ -11,25 +11,21 @@ exports.getList = function(req, res, next) {
 
 	if (req.body.city) {
 		// console.log('got a city search for ' + req.body.city);
-		fireproof.orderByChild('location/city')
-		.equalTo(req.body.city)
-		.on('child_added', function(snapshot) {
-	    res.bars.push(snapshot.val().name);
-	  })
-	  .then(function(req, res, next) {
-	  	next();
-	  })
+		queryDB(req, res, next, 'location/city');
 	} else if (req.body.zipCode) {
 		// console.log('got a zip search for ' + req.body.zipCode);
-		fireproof.orderByChild('location/postal_code')
-		.equalTo(req.body.zipCode)
-		.on('child_added', function(snapshot) {
-			res.bars.push(snapshot.val().name);
-  	})
-  	.then(function() {
-  		console.log(next);
-  		next();
-  	})
+		queryDB(req, res, next, 'location/postal_code');
 	}
 };
 
+function queryDB(req, res, next, searchParam) {
+		fireproof.orderByChild(searchParam)
+		.equalTo(req.body.zipCode)
+		.on('child_added', function(snapshot) {
+			res.bars.push(snapshot.val());
+  	})
+  	.then(function() {
+
+  		next();
+  	})
+}
