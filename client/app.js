@@ -4,16 +4,25 @@ angular.module('WGLR', [])
 
   $scope.list = [];
 
-  $scope.sendZipCode  = function(zipCode) {
+  $scope.sendZipCode  = function(searchParam) {
     // var params = '{enter query}';
+    var integers = ['0','1','2','3','4','5','6','7','8','9']
+    var data;
+    if(integers.indexOf(searchParam[0]) >= 1) {
+    	data = {zipCode: searchParam}
+    } else {
+    	data = {city: searchParam}
+    }
+    console.log(data)
     return $http({
       method: 'POST',
       url: '/list',
       headers: {
         "Content-Type": "application/JSON"
       },
-      data: {zipCode: zipCode}
+      data: data
     }).then(function(res) {
+    	console.log('made it here');
       console.log(res.data);
       $scope.list = res.data
     });
