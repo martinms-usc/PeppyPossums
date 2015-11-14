@@ -5,10 +5,11 @@ var ref = new fire('https://rooftopapp.firebaseio.com/');
 var fireproof = new Fireproof(ref);
 Fireproof.bless(Promise);
 
+
+// search queries
 exports.getList = function(req, res, next) {
   res.bars = [];
   console.log(req.body.zipCode);
-
 	if (req.body.city) {
 		// console.log('got a city search for ' + req.body.city);
 		queryDB(req, res, next, 'location/city', req.body.city);
@@ -25,7 +26,25 @@ function queryDB(req, res, next, searchParam, queryParam) {
 			res.bars.push(snapshot.val());
   	})
   	.then(function() {
-
   		next();
   	})
 }
+
+
+// user queries
+exports.addUser = function(req, res, next) {
+	fireproof.createUser({
+		email: req.body.email,
+		password: req.body.password
+	}, function(err, userData) {
+		if (err) {
+			console.log('error creating user: ' + error);
+		} else {
+			console.log('successfully created user accound with uid: ' + userData.uid);
+		}
+	})
+	.then(function () {
+		next();
+	})
+}
+
