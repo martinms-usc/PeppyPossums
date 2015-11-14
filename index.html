@@ -3,13 +3,23 @@
 <head>
   <title>WGLR</title>
 
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css" integrity="sha512-dTfge/zgoMYpP7QbHy4gWMEGsbsdZeCXz7irItjcC3sPUFtf0kuFbDz/ixG7ArTxmDjLXDmezHubeNikyKGVyQ==" crossorigin="anonymous">
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.7/angular.min.js"></script>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css" >
     <link rel="stylesheet" type="text/css" href="stylesheet.css">
+    <script src="bower_components/lodash/lodash.min.js"></script>
+    <script src="bower_components/angular-simple-logger/dist/angular-simple-logger.min.js"></script>
+    <script src="bower_components/angular-google-maps/dist/angular-google-maps.min.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
-    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.5/angular.min.js"></script>
-    <!-- // <script src="client/controllers.js"></script> -->
-    <script src="client/app.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+
+    <!-- // <script src="ui-bootstrap-custom-build/ui-bootstrap-custom-0.14.3.min.js"></script> -->
+     <script src="ui-bootstrap-custom-build/ui-bootstrap-custom-tpls-0.14.3.min.js"></script>
+
+    <!-- // <script src="client/controllers.js"></script> -->
+    <script src="client/demo.js"></script>
+    <script src="client/accordion.js"></script>
+    <script src="client/controllers.js"></script>
+    <script src="client/app.js"></script>
 
 
 </style>
@@ -69,23 +79,80 @@
   </ul>
 
 
-<div class="list" id="accordion" role="tablist" aria-multiselectable="true" ng-repeat="bar in list track by $index">
+<div ng-controller="AccordionDemoCtrl1">
+  <script type="text/ng-template" id="group-template.html">
+    <div class="panel {{panelClass || 'panel-default'}}" >
+      <div class="panel-heading">
+        <h4 class="panel-title" style="color:#fa39c3">
+          <a href tabindex="0" class="accordion-toggle" ng-click="toggleOpen()" uib-accordion-transclude="heading"><span
+            ng-class="{'text-muted': isDisabled}">{{heading}}</span></a>
+        </h4>
+      </div>
+      <div class="panel-collapse collapse" uib-collapse="!isOpen">
+        <div class="panel-body" style="text-align: right" ng-transclude></div>
+      </div>
+    </div>
+  </script>
 
-<div class="panel panel-default">
+  <p>
+    <button type="button" class="btn btn-default btn-sm" ng-click="status.open = !status.open">Toggle last panel</button>
+    <button type="button" class="btn btn-default btn-sm" ng-click="status.isFirstDisabled = ! status.isFirstDisabled">Enable / Disable first panel</button>
+  </p>
+
+  <div class="checkbox">
+    <label>
+      <input type="checkbox" ng-model="oneAtATime">
+      Open only one at a time
+    </label>
+  </div>
+  <uib-accordion close-others="oneAtATime">
+    <<!-- uib-accordion-group heading="Static Header, initially expanded" is-open="status.isFirstOpen" is-disabled="status.isFirstDisabled" >
+
+    </uib-accordion-group> -->
+    <uib-accordion-group heading="{{group.title}}" ng-repeat="group in groups">
+
+    </uib-accordion-group>
+    <uib-accordion-group heading="{{ bar.name }}" ng-repeat="bar in list track by $index">
+      <p>{{ bar.name }}</p>
+      <button type="button" class="btn btn-default btn-sm" ng-click="addItem()">Add Item</button>
+      <div ng-repeat="item in items">{{item}}</div>
+    </uib-accordion-group>
+    <uib-accordion-group heading="Custom template" template-url="group-template.html">
+      Hello
+    </uib-accordion-group>
+   <!--  <uib-accordion-group heading="Delete account" panel-class="panel-danger">
+      <p>Please, to delete your account, click the button below</p>
+      <button class="btn btn-danger">Delete</button>
+    </uib-accordion-group> -->
+    <uib-accordion-group is-open="status.open">
+      <uib-accordion-heading>
+        I can have markup, too! <i class="pull-right glyphicon" ng-class="{'glyphicon-chevron-down': status.open, 'glyphicon-chevron-right': !status.open}"></i>
+      </uib-accordion-heading>
+      This is just some content to illustrate fancy headings.
+    </uib-accordion-group>
+  </uib-accordion>
+</div>
+
+<!-- <div class="list" id="accordion" role="tablist" aria-multiselectable="true" >
+
+  <div class="panel panel-default" ng-repeat="bar in list track by $index">
     <div class="panel-heading" role="tab" id="headingTwo">
       <h4 class="panel-title">
         <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
-          {{ bar }}
+        <!-- {{bar.rating_img_url_small}}
+          {{ bar.name }}
         </a>
       </h4>
     </div>
     <div id="collapseTwo" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingTwo">
       <div class="panel-body">
-        Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. 3 wolf moon officia aute, non cupidatat skateboard dolor brunch. Food truck quinoa nesciunt laborum eiusmod. Brunch 3 wolf moon tempor, sunt aliqua put a bird on it squid single-origin coffee nulla assumenda shoreditch et. Nihil anim keffiyeh helvetica, craft beer labore wes anderson cred nesciunt sapiente ea proident. Ad vegan excepteur butcher vice lomo. Leggings occaecat craft beer farm-to-table, raw denim aesthetic synth nesciunt you probably haven't heard of them accusamus labore sustainable VHS.
+      {{bar.snippet_text}}
+      <img src="{{ bar.snippet_image_url}}">
       </div>
     </div>
   </div>
-</div>
+
+</div> --> -->
 <!--     <div class="bs-example">
     <div class="bars" >
         <div class="panel panel-default" class="bars" ng-repeat="bar in list track by $index">
