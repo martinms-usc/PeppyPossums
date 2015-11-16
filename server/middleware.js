@@ -4,10 +4,11 @@ var query = require('./queries');
 exports.validateLogin = function() {}
 
 
-exports.processSignup= function() {
+exports.processSignup= function(req, res, next) {
 
-		query.addUser(req, res)
+	query.addUser(req, res)
 
+	next();
 }
 
 
@@ -18,7 +19,7 @@ var isLoggedIn = function(req) {
 
 exports.checkUser = function(req, res, next){
   if (!isLoggedIn(req)) {
-    res.redirect('/login');
+    res.redirect(301, '/login');
   } else {
     next();
   }
