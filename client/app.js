@@ -46,9 +46,12 @@ angular.module('WGLR', ['ui.bootstrap', 'ngAnimate', 'uiGmapgoogle-maps'])
       $scope.list = res.data;
 
       //---Google Maps start---
-      $scope.map = {center: { latitude: res.data[0].location.coordinate.latitude, longitude: res.data[0].location.coordinate.longitude }, zoom: 8 };
       $scope.markerList = [];
       var markers = [];
+      var sumLat = 0;
+      var sumLong = 0;
+      var count = 0;
+     
       for (var key in $scope.list) {
         var latitude = $scope.list[key].location.coordinate.latitude;
         var longitude = $scope.list[key].location.coordinate.longitude;
@@ -56,8 +59,16 @@ angular.module('WGLR', ['ui.bootstrap', 'ngAnimate', 'uiGmapgoogle-maps'])
         var ratings = $scope.list[key].rating_img_url_small;
         var url = $scope.list[key].url;
         markers.push({id: key, latitude: latitude, longitude: longitude, name: name, url: url, ratings: ratings, show: false });
+        
+        sumLat += latitude;
+        sumLong += longitude;
+        ++count;
       }
 
+      var avgLat = sumLat / count;
+      var avgLong = sumLong / count;
+
+      $scope.map = {center: { latitude: avgLat, longitude: avgLong }, zoom: 10 };
       $scope.markerList = markers;
   
       $scope.onClick = function(marker, eventName, model) {
