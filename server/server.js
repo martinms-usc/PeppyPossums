@@ -41,19 +41,19 @@ listRouter.get('/', function(req, res) {
 
 var userRouter = express.Router();
 
-userRouter.get('/login', function(req, res) {
-  console.log('###### JUST GOT LOGIN REQUEST #######');
-  res.sendFile(path.join(__dirname + '../client/register.html'));
-})
+// userRouter.get('/login', function(req, res) {
+//   console.log('###### JUST GOT LOGIN REQUEST #######');
+//   res.sendFile(path.join(__dirname + '../client/register.html'));
+// })
 userRouter.post('/login', mid.validateLogin, function(req, res) {
-  console.log('user was validated, redirecting to main');
-
-  res.redirect('/list');
+  console.log('user was validated, creating session/redirecting to main');
+  res.redirect('/');
 })
 
-userRouter.get('/signup', function(req, res) {
-  res.sendFile(path.join(__dirname + '../client/register.html'));
-})
+// userRouter.get('/signup', function(req, res) {
+//   console.log('GET REQUEST TO SIGNUP PAGE');
+//   res.sendFile(path.join(__dirname + '../client/register.html'));
+// })
 userRouter.post('/signup', mid.processSignup, function(req, res) {
   console.log('user was just added to database, redirecting to main')
   res.redirect('/list');

@@ -1,14 +1,20 @@
 var query = require('./queries');
 var bcrypt = require('bcrypt');
 var session = require('express-session');
+var promisify = require("promisify-node");
 
 exports.validateLogin = function(req, res, next) {
 	var em = req.body.email;
 	var pass = req.body.password;
 	var user = {email: em, password: pass};
 
-	query.findUser(req, res, loginCallback);
-	next();
+	var wrap = promisify(query.findUser);
+
+	wrap(req, res, user, loginCallback)
+	.then(function(req, res) {
+		console.log('find user worked, logincallback ran');
+		next();
+	});
 	// attempt to fetch user from database
 	// function(foundUser) {
 	// 	if (!foundUser) {
@@ -29,21 +35,23 @@ exports.validateLogin = function(req, res, next) {
 	// }
 }
 
-var loginCallback =	function(foundUser) {
-	console.log('passed into loginCallback was ' + foundUser);
+var loginCallback =	function(req, res, user, foundUser) {
+	console.log('inside logincallback');
 	if (!foundUser) {
 		console.log('username was not found');
 		res.redirect(301, '/login');
 	} else {
-		console.log('user was found, data returned is ' + foundUser);
+		console.log('user was found in db username is ' + foundUser.email)
 		console.log('user pass ' + foundUser.password);
 		// test given password against saved
 		if (foundUser.password === req.body.password) {
 			// if match, create session and redirect to main
-			createSession(req, res, user);
+			console.log('PASSWORDS MATCH');
+			return (req, res);
+			// createSession(req, res, user);
 		} else {
-			console.log('error, incorrect password');
-			res.send('Wrong Password!!')
+			console.log('Error, incorrect password');
+			res.end();
 		}
 	}
 }

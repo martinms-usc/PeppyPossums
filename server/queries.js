@@ -44,7 +44,7 @@ exports.addUser = function(req, res, user, callback) {
 	callback(user);
 };
 
-exports.findUser = function(req, res, next, callback) {
+exports.findUser = function(req, res, user, callback) {
 	console.log('going to look for user in db');
 	var found;
 	usersRef.orderByChild('email')
@@ -54,8 +54,8 @@ exports.findUser = function(req, res, next, callback) {
 		found = snapshot.val();
 	})
 	.then(function() {
-		console.log('sup');
-		callback(found);
+		console.log('queries.js user was found, running callback');
+		callback(req, res, user, found);
 	})
 };
 

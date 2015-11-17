@@ -10,6 +10,7 @@ angular.module('register', [])
 			data: {email: email, password: pass}
 		}).then(function(response) {
 			console.log('successful post to login');
+			console.log('response url is ' + response.url);
 		}, function(response) {
 			console.log('there was an error, dumbass');
 		})
