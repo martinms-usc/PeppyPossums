@@ -21,6 +21,24 @@ angular.module('WGLR', ['ui.bootstrap', 'ngAnimate', 'uiGmapgoogle-maps', 'ui.ro
   });
 })
 
+.controller('menuController', function($scope, $http) {
+  $scope.findMenu = function(name, postal) {
+    return $http({
+      method: 'POST',
+      url: '/menu',
+      headers: {
+        "Content-Type": "application/JSON"
+      },
+      data: {name: "Rush Street", postal_code: '90232'}
+    }).then(function(res) {
+      console.log(res.data);
+      // for(var)
+    })
+  }
+  console.log('test');
+  $scope.findMenu();
+})
+
 .controller('appController', function($scope, $http, uiGmapGoogleMapApi) {
 
   $scope.list = [];
@@ -29,7 +47,7 @@ angular.module('WGLR', ['ui.bootstrap', 'ngAnimate', 'uiGmapgoogle-maps', 'ui.ro
     // var params = '{enter query}';
     var integers = ['0','1','2','3','4','5','6','7','8','9']
     var data;
-    if(integers.indexOf(searchParam[0]) >= 1) {
+    if(integers.indexOf(searchParam[0]) >= 0) {
     	data = {zipCode: searchParam}
     } else {
     	data = {city: searchParam}
