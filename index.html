@@ -6,7 +6,7 @@
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.7/angular.min.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.7/angular-animate.js"></script>
 
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css" >
+    <link rel="stylesheet" href="bower_components/bootstrap/dist//css/bootstrap.min.css" >
     <link rel="stylesheet" type="text/css" href="stylesheet.css">
     <script src="bower_components/lodash/lodash.min.js"></script>
     <script src="bower_components/angular-simple-logger/dist/angular-simple-logger.min.js"></script>
@@ -23,9 +23,10 @@
     <script src="client/controllers.js"></script>
     <script src="client/app.js"></script>
 
-</style>
+
 
 </head>
+
 
 
 <body ng-controller="appController">
@@ -33,14 +34,14 @@
   <ul class="nav nav-pills pull-right">
   </nav>
  -->
-<nav class="navbar navbar-default">
+<nav class="navbar navbar-default" class="col-sm-5 col-md-6">
   <div class="container-fluid">
     <!-- Brand and toggle get grouped for better mobile display -->
 
 
     <!-- Collect the nav links, forms, and other content for toggling -->
     <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-      <ul class="nav navbar-nav navbar-right">
+      <ul class="nav navbar-nav navbar-left">
         <!-- <li class="active"><a href="#">Link <span class="sr-only">(current)</span></a></li> -->
         <li><a href="#">Link</a></li>
         <li class="dropdown">
@@ -85,15 +86,15 @@
 
     <div class="bg"></div>
     <div class="jumbotron">
-      <h2>Welcome to Wiggler</h2>
+      <p class="welcomeTitle">Welcome to Wiggler</p>
     <p class="lead">
     </div>
 
 
-<div ui-view> </div>
+<!-- <div ui-view> </div> -->
 
 
-  <div class="container">
+  <div class="container-fluid">
 
 
     <div class="col-lg-8  text-center">
@@ -102,61 +103,65 @@
           <input type="text" class="form-control input-lg text-center" placeholder="type in a zipcode" ng-model="zipCode">
         </div>
         <br>
-        <button type="submit" class="btn btn-primary btn-lg" ng-click="sendZipCode(zipCode)"> Get me to a roof </button>
+        <button type="submit" class="btn btn-primary btn-lg" ng-click="sendZipCode(zipCode); showDetails = true" > Get me to a roof </button>
       </form>
       <br>
     </div>
     <br>
+
   </div>
 
-<div ng-controller="MapController" class="col-lg-6">
-  <ui-gmap-google-map center="map.center" zoom="map.zoom">
-    <ui-gmap-marker coords="map.center" idkey="1"></ui-gmap-marker>
-  </ui-gmap-google-map>
-</div>
 
-  <uib-accordion close-others="true" class="col-sm-5 col-md-6">
-    <!-- <uib-accordion-group heading="Static Header, initially expanded" is-open="status.isFirstOpen" is-disabled="status.isFirstDisabled" > -->
 
-    <!-- </uib-accordion-group> -->
-    <uib-accordion-group heading="{{group.title}}" ng-repeat="group in groups">
+  <div ng-show="showDetails" class="absolute" class="mythumb" data-offset-top="530"  data-spy="affix">
+    <div  >
+       <ui-gmap-google-map center="map.center" zoom="map.zoom">
+         <ui-gmap-marker data-ng-repeat="marker in markerList" coords="marker" click="marker.events" idkey="marker.id">
+           <ui-gmap-window isIconVisibleOnClick="true">
+             <p>
+               {{marker.name}}
+               <img class="map_reviews" src={{marker.ratings}}></img>
 
-    </uib-accordion-group>
-    <uib-accordion-group ng-repeat="bar in list track by $index" class="col-lg-6 col-md-4 text-center">
+             </p>
+           </ui-gmap-window>
+         </ui-gmap-marker>
+       </ui-gmap-google-map>
+      </div>
+    </div>
+  </div>
 
-     <uib-accordion-heading>
-     {{ bar.name }}
-     <img src='{{ bar.rating_img_url}}'>
-     </uib-accordion-heading>
-     <div>
-     <img src="{{bar.image_url}}" >
-    </div class="col-md-4">
-      <p>{{bar.location.address[0]}} <br>
-      {{bar.location.city}},
-      {{bar.location.state_code}}
-      {{bar.location.postal_code}} <br>
-      {{bar.display_phone}}
-      </p>
 
-      <button type="button" class="btn btn-default btn-sm" ng-click="addItem()" ng-controller="MapController">Add Item</button>
-      <div ng-repeat="item in items"> hey{{item}}</div>
 
-    </uib-accordion-group>
-<!--     <uib-accordion-group heading="Custom template" template-url="group-template.html">
-      Hello
-    </uib-accordion-group> -->
-   <!--  <uib-accordion-group heading="Delete account" panel-class="panel-danger">
-      <p>Please, to delete your account, click the button below</p>
-      <button class="btn btn-danger">Delete</button>
-    </uib-accordion-group> -->
-<!--     <uib-accordion-group is-open="status.open">
-      <uib-accordion-heading>
-        I can have markup, too! <i class="pull-right glyphicon" ng-class="{'glyphicon-chevron-down': status.open, 'glyphicon-chevron-right': !status.open}"></i>
-      </uib-accordion-heading>
-      This is just some content to illustrate fancy headings.
-    </uib-accordion-group> -->
-  </uib-accordion>
-</div>
+    <uib-accordion close-others="true" class="col-lg-12 col-md-6 col-sm-6" >
+
+      <uib-accordion-group ng-repeat="bar in list track by $index" class="col-lg-6 text-center">
+
+       <uib-accordion-heading>
+       {{ bar.name }}
+       <img src='{{ bar.rating_img_url}}'>
+       </uib-accordion-heading>
+       <div>
+       <img src="{{bar.image_url}}" >
+      </div class="col-md-4">
+        <p>{{bar.location.address[0]}} <br>
+        {{bar.location.city}},
+        {{bar.location.state_code}}
+        {{bar.location.postal_code}} <br>
+        {{bar.display_phone}}
+        </p>
+
+        <button type="button" class="btn btn-default btn-sm" ng-click="addItem()" >Add Item</button>
+        <div ng-repeat="item in items"> hey{{item}}</div>
+
+      </uib-accordion-group>
+
+    </uib-accordion>
+
+
+
+
+
+
 
 
 
@@ -188,6 +193,23 @@
 
       $(window).scroll(function(e){
           parallax();});
+
+
+      // var top = $('.thisone').offset().top;
+      // $('.trigger').click(function () {
+      //     $('.thisone').css('position','');
+      //     $('.left2').toggle('slow',function(){
+      //         top = $('.thisone').offset().top;
+      // });
+
+      // });
+      //  $(document).scroll(function(){
+      //   $('.thisone').css('position','');
+      //   top = $('.thisone').offset().top;
+      //     $('.thisone').css('position','absolute');
+      //     $('.thisone').css('top',Math.max(top,$(document).scrollTop()));
+      //   });
+
      </script>
 </body>
 

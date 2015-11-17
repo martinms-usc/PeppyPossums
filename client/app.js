@@ -1,14 +1,14 @@
-angular.module('WGLR', ['ui.bootstrap', 'ngAnimate', 'uiGmapgoogle-maps', 'ui.router'])
+angular.module('WGLR', ['ui.bootstrap', 'ngAnimate', 'uiGmapgoogle-maps'])
 
 
-.config(function(uiGmapGoogleMapApiProvider , $stateProvider, $urlRouterProvider) {
-  $urlRouterProvider.otherwise('/main');
-  $stateProvider
-    .state('main', {
-      url: '/',
-      controller: 'appController',
-      templateUrl: 'homepage.html'
-    })
+.config(function(uiGmapGoogleMapApiProvider ) {
+  // $urlRouterProvider.otherwise('/main');
+  // $stateProvider
+  //   .state('main', {
+  //     url: '/',
+  //     controller: 'appController',
+  //     templateUrl: 'homepage.html'
+  //   })
     // .state('signup', {
     //   url: '/signup',
     //   templateUrl: 'xxxx.html'
@@ -21,23 +21,7 @@ angular.module('WGLR', ['ui.bootstrap', 'ngAnimate', 'uiGmapgoogle-maps', 'ui.ro
   });
 })
 
-.controller("MapController", function($scope, uiGmapGoogleMapApi) {
-  $scope.map = { center: { latitude: 45, longitude: -73 }, zoom: 8 };
-    // Do stuff with your $scope.
-    var haha;
-
-    console.log("haha");
-    // Note: Some of the directives require at least something to be defined originally!
-    // e.g. $scope.markers = []
-
-    // uiGmapGoogleMapApi is a promise.
-    // The "then" callback function provides the google.maps object.
-  uiGmapGoogleMapApi.then(function(maps) {
-    console.log("working!");
-  });
-})
-
-.controller('appController', function($scope, $http) {
+.controller('appController', function($scope, $http, uiGmapGoogleMapApi) {
 
   $scope.list = [];
 
@@ -59,41 +43,23 @@ angular.module('WGLR', ['ui.bootstrap', 'ngAnimate', 'uiGmapgoogle-maps', 'ui.ro
       },
       data: data
     }).then(function(res) {
-    	console.log('made it here');
-      console.log(res.data);
-      $scope.list = res.data
+      $scope.list = res.data;
+      //Gather Data for google maps
+      uiGmapGoogleMapApi.then(function(maps) {
+        console.log("Working");
+        $scope.markerList = [];
+        for (var key in $scope.list) {
+          var latitude = $scope.list[key].location.coordinate.latitude;
+          var longitude = $scope.list[key].location.coordinate.longitude;
+          var name = $scope.list[key].name;
+          var ratings = $scope.list[key].rating_img_url_small;
+          $scope.markerList.push({id: key, latitude: latitude, longitude: longitude, name: name, ratings: ratings });
+        }
+        //average latitude
+        $scope.map = {center: { latitude: res.data[0].location.coordinate.latitude, longitude: res.data[0].location.coordinate.longitude }, zoom: 8 };
+      });
     });
   }
-
-
-
-// appControllers.controller('List', function($scope) {
-
-
-// });
-
-// appControllers.controller('DrinksMenu', function($scope) {
-
-// });
-
-
-
-// });
-
-// myApp.config(function($stateProvider, $urlRouterProvider) {
-// 	$urlRouterProvider.
-// 	  otherwise('/main');
-// 	$stateProvider
-// 		.state('list', {
-// 			url: '/list',
-// 			controller: 'List',
-// 			templateUrl: 'views/list.html'
-// 		})
-// 		.state('drinksmenu', {
-// 			url: 'list/drinksmenu',
-// 			controller: 'DrinksMenu',
-// 			templateUrl: 'views/drinksmenu.html'
-// 		}
 })
 .controller('AccordionDemoCtrl', function ($scope) {
   $scope.oneAtATime = true;
