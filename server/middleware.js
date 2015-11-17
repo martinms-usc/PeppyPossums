@@ -7,39 +7,60 @@ exports.validateLogin = function(req, res, next) {
 	var pass = req.body.password;
 	var user = {email: em, password: pass};
 
-	query.findUser(req, res)
+	query.findUser(req, res, loginCallback);
+	next();
 	// attempt to fetch user from database
-	.then(function(foundUser) {
-		if (!foundUser) {
-			console.log('username was not found');
-			res.redirect(301, '/login');
-		} else {
-			console.log('user was found, data returned is ' + foundUser);
-			console.log('user pass ' + foundUser.password);
-			// test given password against saved
-			if (foundUser.password === req.body.password) {
-				// if match, create session and redirect to main
-				createSession(req, res, user);
-			} else {
-				console.log('error, incorrect password');
-				res.send('Wrong Password!!')
-			}
-		}
-	})
+	// function(foundUser) {
+	// 	if (!foundUser) {
+	// 		console.log('username was not found');
+	// 		res.redirect(301, '/login');
+	// 	} else {
+	// 		console.log('user was found, data returned is ' + foundUser);
+	// 		console.log('user pass ' + foundUser.password);
+	// 		// test given password against saved
+	// 		if (foundUser.password === req.body.password) {
+	// 			// if match, create session and redirect to main
+	// 			createSession(req, res, user);
+	// 		} else {
+	// 			console.log('error, incorrect password');
+	// 			res.send('Wrong Password!!')
+	// 		}
+	// 	}
+	// }
 }
 
-exports.processSignup = function(req, res, next) {
+var loginCallback =	function(foundUser) {
+	console.log('passed into loginCallback was ' + foundUser);
+	if (!foundUser) {
+		console.log('username was not found');
+		res.redirect(301, '/login');
+	} else {
+		console.log('user was found, data returned is ' + foundUser);
+		console.log('user pass ' + foundUser.password);
+		// test given password against saved
+		if (foundUser.password === req.body.password) {
+			// if match, create session and redirect to main
+			createSession(req, res, user);
+		} else {
+			console.log('error, incorrect password');
+			res.send('Wrong Password!!')
+		}
+	}
+}
+
+exports.processSignup = function(req, res, next, signupCallback) {
 	var em = req.body.email;
 	var pass = req.body.password;
 	var newUser = {email: em, password: pass};
 
-	query.addUser(req, res, user)
-	.then(function(newUser) {
-		console.log('process signup promise, new user is ' + newUser.email);
-		createSession(req, res, newUser);
-		next();
-	})
-}
+	query.addUser(req, res, newUser, signupCallback);
+	next();
+};
+
+var signupCallback = function(user) {
+	console.log('process signup promise, new user is ' + newUser.email);
+	createSession(req, res, newUser);
+};
 
 var createSession = function(req, res, newUser) {
   return req.session.regenerate(function() {

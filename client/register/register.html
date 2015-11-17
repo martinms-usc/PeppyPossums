@@ -10,14 +10,16 @@
 		<button name="loginSubmit" value="Submit" ng-click="submitLogin( email, pass )">Submit</button>
 		<br>
 		<br>
+		{{email}}
+		{{pass}}
 		<h2>Signup</h2>
 		<p>Email: 
-			<input type="text"> </input>
+			<input type="text" ng-model="email2"> </input>
 		</p>
 		<p>Password:
-			<input type="text"> </input>
+			<input type="password" ng-model="pass2"> </input>
 		</p>
 
-		<button name="signupSubmit" value="Submit">Submit</button>
+		<button name="signupSubmit" value="Submit" ng-click="submitSignup(email2, pass2)">Submit</button>
 	</form>
 </div>

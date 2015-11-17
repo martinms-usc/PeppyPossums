@@ -29,17 +29,25 @@ app.use(session({
 var listRouter = express.Router();
 
 listRouter.post('/', query.getList, function(req, res) {
+  console.log('getting a POST request for /list');
   res.send(res.bars);
+})
+
+listRouter.get('/', function(req, res) {
+  console.log('getting a GET request for /list');
+  res.redirect(__dirname + '/../index.html');
 })
 
 
 var userRouter = express.Router();
 
 userRouter.get('/login', function(req, res) {
+  console.log('###### JUST GOT LOGIN REQUEST #######');
   res.sendFile(path.join(__dirname + '../client/register.html'));
 })
 userRouter.post('/login', mid.validateLogin, function(req, res) {
-  console.log('user was validated, redirecting to main')
+  console.log('user was validated, redirecting to main');
+
   res.redirect('/list');
 })
 

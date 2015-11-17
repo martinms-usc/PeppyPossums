@@ -1,11 +1,12 @@
 angular.module('register', [])
 
-.controller('formController', function($scope) {
+.controller('formController', function($scope, $http) {
 
 	$scope.submitLogin = function(email, pass) {
+		console.log('login input is ' + email + pass)
 		$http({
 			method: "POST",
-			url: "https://rooftopapp.firebaseio.com/user/login",
+			url: "/user/login",
 			data: {email: email, password: pass}
 		}).then(function(response) {
 			console.log('successful post to login');
@@ -17,7 +18,7 @@ angular.module('register', [])
 	$scope.submitSignup = function(email, pass) {
 		$http({
 			method: "POST",
-			url: "https://rooftopapp.firebaseio.com/user/signup",
+			url: "/user/signup",
 			data: {email: email, password: pass}
 		}).then(function(response) {
 			console.log('successful post to signup');

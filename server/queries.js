@@ -4,6 +4,7 @@ var Promise = require('bluebird');
 var ref = new fire('https://rooftopapp.firebaseio.com/');
 var fireproof = new Fireproof(ref);
 Fireproof.bless(Promise);
+var usersRef = fireproof.child('users');
 
 
 // search queries
@@ -21,32 +22,40 @@ exports.getList = function(req, res, next) {
 
 // helper for getList^
 function queryDB(req, res, next, searchParam, queryParam) {
-		fireproof.orderByChild(searchParam)
-		.equalTo(queryParam)
-		.on('child_added', function(snapshot) {
-			res.bars.push(snapshot.val());
-  	})
-  	.then(function() {
-  		next();
-  	})
+	console.log('going to look for bars in the db');
+	fireproof.orderByChild(searchParam)
+	.equalTo(queryParam)
+	.on('child_added', function(snapshot) {
+		res.bars.push(snapshot.val());
+	})
+	.then(function() {
+
+		next();
+	})
 };
 
 // user queries
-exports.addUser = function(req, res, user) {
-	var usersRef = fireproof.child('users');
+exports.addUser = function(req, res, user, callback) {
+	console.log('adding user');
 	// alternatively : 
 	// var fire = new Firebase('http://rooftopapp.firebaseio.com/users')
 	// fire.push(user);
 	usersRef.push(user);
-	return user;
+	callback(user);
 };
 
-exports.findUser = function(req, res, next) {
+exports.findUser = function(req, res, next, callback) {
+	console.log('going to look for user in db');
+	var found;
 	usersRef.orderByChild('email')
 	.equalTo(req.body.email)
 	.on('child_added', function(snapshot) {
 		console.log('User was found: ' + snapshot.val());
-		return snapshot.val();
+		found = snapshot.val();
+	})
+	.then(function() {
+		console.log('sup');
+		callback(found);
 	})
 };
 
