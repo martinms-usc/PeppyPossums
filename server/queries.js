@@ -19,6 +19,7 @@ exports.getList = function(req, res, next) {
 	}
 };
 
+// helper for getList^
 function queryDB(req, res, next, searchParam, queryParam) {
 		fireproof.orderByChild(searchParam)
 		.equalTo(queryParam)
@@ -28,23 +29,50 @@ function queryDB(req, res, next, searchParam, queryParam) {
   	.then(function() {
   		next();
   	})
-}
-
+};
 
 // user queries
-exports.addUser = function(req, res, next) {
-	fireproof.createUser({
-		email: req.body.email,
-		password: req.body.password
-	}, function(err, userData) {
-		if (err) {
-			console.log('error creating user: ' + error);
-		} else {
-			console.log('successfully created user accound with uid: ' + userData.uid);
-		}
+exports.addUser = function(req, res, user) {
+	var usersRef = fireproof.child('users');
+	// alternatively : 
+	// var fire = new Firebase('http://rooftopapp.firebaseio.com/users')
+	// fire.push(user);
+	usersRef.push(user);
+	return user;
+};
+
+exports.findUser = function(req, res, next) {
+	usersRef.orderByChild('email')
+	.equalTo(req.body.email)
+	.on('child_added', function(snapshot) {
+		console.log('User was found: ' + snapshot.val());
+		return snapshot.val();
 	})
-	.then(function () {
-		next();
-	})
-}
+};
+
+
+// firebase's user creation method, leave this just in case
+	// fireproof.createUser({
+	// 	email: req.body.email,
+	// 	password: req.body.password
+	// }, function(error, userData) {
+	//   if (error) {
+	//     switch (error.code) {
+	//       case "EMAIL_TAKEN":
+	//         console.log("The new user account cannot be created because the email is already in use.");
+	//         break;
+	//       case "INVALID_EMAIL":
+	//         console.log("The specified email is not a valid email.");
+	//         break;
+	//       default:
+	//         console.log("Error creating user: ", error);
+	//     }
+	//   } else {
+	//     console.log("Successfully created user account with uid:", userData.uid);
+	//   }
+	// })
+	// .then(function () {
+	// 	next();
+	// })
+	// }
 
