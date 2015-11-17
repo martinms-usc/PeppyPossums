@@ -6,9 +6,10 @@
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.7/angular.min.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.7/angular-animate.js"></script>
 
-    <!-- <link rel="stylesheet" href="bower_components/bootstrap/dist//css/bootstrap.min.css" > -->
+   
     <link rel="stylesheet" href="bootstrap-andrew-custom.css" >
     <link rel="stylesheet" type="text/css" href="stylesheet.css">
+    <link rel="stylesheet" type="text/css" href="stylish-portfolio.css">
     <script src="bower_components/lodash/lodash.min.js"></script>
     <script src="bower_components/angular-simple-logger/dist/angular-simple-logger.min.js"></script>
     <script src="bower_components/angular-ui-router/release/angular-ui-router.js"></script>
@@ -24,6 +25,7 @@
 
 
 <body ng-controller="appController" class="body">
+  <div ui-view>
 
 <!-- login and signup buttons -->
   <div class="login">
@@ -64,7 +66,6 @@
     </div>
   </div>
 
-  <div ui-view></div>
 
     <div class="row">
         <!-- <h2>Lily</h2> -->
@@ -123,6 +124,7 @@
             <div ng-non-bindable>
               <p><a href={{url}} target="_blank">{{name}}</a></p>
               <img src={{ratings}} />
+              <p>{{reviewCount}} reviews</p>
             </div>
           </ui-gmap-windows>
         </ui-gmap-markers>
@@ -134,7 +136,8 @@
 
   <uib-accordion close-others="true" class="col-lg-6 col-md-6 col-sm-6 col-xs-6" >
 
-    <uib-accordion-group ng-repeat="bar in list track by $index" class="col-lg-6  text-center" >
+    <uib-accordion-group ng-repeat="bar in list track by $index" class="col-lg-6 text-center" ng-click="mapZoom($index)">
+
 
      <uib-accordion-heading >
        {{ bar.name }}
@@ -185,6 +188,7 @@
       $(window).scroll(function(e){
         parallax();});
      </script>
+  </div>
 </body>
 
 
