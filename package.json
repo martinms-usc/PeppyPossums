@@ -13,6 +13,7 @@
     "express": "^4.4.5",
     "firebase": "^2.3.1",
     "morgan": "^1.1.1",
+    "promisify-node": "^0.2.1",
     "request": "^2.36.0"
   }
 }

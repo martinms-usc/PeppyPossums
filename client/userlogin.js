@@ -7,7 +7,7 @@ angular.module('userModule', [])
       headers: {
         "Content-Type": "application/JSON"
       },
-      data: {email: email, password, password}
+      data: {email: email, password: password}
     })
     // .then(function(res) {
     // 	console.log('made it here');

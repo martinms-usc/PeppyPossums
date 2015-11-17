@@ -11,11 +11,7 @@ var session = require('express-session');
 app.use(bodyParser.urlencoded({extended: true}));
 app.use(bodyParser.json());
 
-// these two do the same thing (line 15 & line 16-18)
 app.use(express.static(__dirname + '/..'));
-// app.get('/', function(req, res) {
-//   res.sendFile(path.join(__dirname + '/../index.html'));
-// })
 
 // for every request, log the metadata
 app.use(function (req, res, next){
@@ -29,30 +25,48 @@ app.use(session({
   saveUninitialized: true
 }));
 
+
 var listRouter = express.Router();
-listRouter.post('/', query.getList, function(req, res, next) {
+
+listRouter.post('/', query.getList, function(req, res) {
+  console.log('getting a POST request for /list');
   res.send(res.bars);
+})
+
+listRouter.get('/', function(req, res) {
+  console.log('getting a GET request for /list');
+  res.redirect(__dirname + '/../index.html');
 })
 
 
 var userRouter = express.Router();
-userRouter.get('/login', function(req, res) {
-  res.send('this is the login page');
-})
+
+// userRouter.get('/login', function(req, res) {
+//   console.log('###### JUST GOT LOGIN REQUEST #######');
+//   res.sendFile(path.join(__dirname + '../client/register.html'));
+// })
 userRouter.post('/login', mid.validateLogin, function(req, res) {
+  console.log('user was validated, creating session/redirecting to main');
+  res.redirect('/');
+})
+
+// userRouter.get('/signup', function(req, res) {
+//   console.log('GET REQUEST TO SIGNUP PAGE');
+//   res.sendFile(path.join(__dirname + '../client/register.html'));
+// })
+userRouter.post('/signup', mid.processSignup, function(req, res) {
   console.log('user was just added to database, redirecting to main')
   res.redirect('/list');
 })
-userRouter.get('/signup', function(req, res) {
-  res.send('here is the signup page');
+
+userRouter.get('/logout', function(req, res) {
+  req.session.destroy(function() {
+    res.redirect('/login');
+  })
 })
-userRouter.post('/signup', mid.processSignup, function(req, res, next) {
-  console.log('user was just added to database, redirecting to main')
-  res.redirect('/list');
-})
-userRouter.post('/add', mid.checkUser, function(req, res) {
-  res.send('success');
-})
+// userRouter.post('/add', mid.checkUser, function(req, res) {
+//   res.send('success');
+// })
 
 // apply routes to application
 app.use('/list', listRouter);

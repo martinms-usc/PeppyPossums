@@ -1,0 +1,25 @@
+<div ng-controller="formController">
+	<form>
+		<h2>Login</h2>
+		<p>Email: 
+			<input type="text" name="email" ng-model="email"> </input>
+		</p>
+		<p>Password:
+			<input type="password" name="pass" ng-model="pass"> </input>
+		</p>
+		<button name="loginSubmit" value="Submit" ng-click="submitLogin( email, pass )">Submit</button>
+		<br>
+		<br>
+		{{email}}
+		{{pass}}
+		<h2>Signup</h2>
+		<p>Email: 
+			<input type="text" ng-model="email2"> </input>
+		</p>
+		<p>Password:
+			<input type="password" ng-model="pass2"> </input>
+		</p>
+
+		<button name="signupSubmit" value="Submit" ng-click="submitSignup(email2, pass2)">Submit</button>
+	</form>
+</div>
