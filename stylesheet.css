@@ -15,9 +15,15 @@
   text-shadow: #444 0 5px 5px;
   background:transparent;
 }
-    .list{
-      margin: 130px;
-    }
+
+.list{
+  margin: 130px;
+}
+.angular-google-map-container {
+ height: 400px;
+ width: 400px;
+}
+
 
 /*.h3 .jumbotron {
   position: fixed;

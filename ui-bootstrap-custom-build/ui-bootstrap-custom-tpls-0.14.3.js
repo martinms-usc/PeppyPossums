@@ -59,6 +59,7 @@ angular.module('ui.bootstrap.accordion', ['ui.bootstrap.collapse'])
     transclude: true,
     templateUrl: function(element, attrs) {
       return attrs.templateUrl || 'template/accordion/accordion.html';
+
     }
   };
 })
@@ -108,6 +109,7 @@ angular.module('ui.bootstrap.accordion', ['ui.bootstrap.collapse'])
 // Use accordion-heading below an accordion-group to provide a heading containing HTML
 .directive('uibAccordionHeading', function() {
   return {
+
     transclude: true,   // Grab the contents to be used as the heading
     template: '',       // In effect remove this element!
     replace: true,
@@ -137,6 +139,11 @@ angular.module('ui.bootstrap.accordion', ['ui.bootstrap.collapse'])
     }
   };
 });
+
+
+
+
+
 
 /* Deprecated accordion below */
 
