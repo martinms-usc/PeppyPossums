@@ -7,6 +7,8 @@ var Promise = require('bluebird');
 var query = require('./queries.js');
 var mid = require('./middleware.js');
 var session = require('express-session');
+var http = require('http');
+var menu = require('./findmenu.js')
 
 app.use(bodyParser.urlencoded({extended: true}));
 app.use(bodyParser.json());
@@ -68,9 +70,15 @@ userRouter.get('/logout', function(req, res) {
 //   res.send('success');
 // })
 
+var menuRouter = express.Router();
+menuRouter.post('/', menu.downloadMenu, function(req, res, next) {
+  res.send(res.menu);
+})
+
 // apply routes to application
 app.use('/list', listRouter);
 app.use('/user', userRouter);
+app.use('/menu', menuRouter);
 
 app.listen(3000);
 
