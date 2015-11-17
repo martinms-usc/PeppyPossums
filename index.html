@@ -10,109 +10,61 @@
     <link rel="stylesheet" type="text/css" href="stylesheet.css">
     <script src="bower_components/lodash/lodash.min.js"></script>
     <script src="bower_components/angular-simple-logger/dist/angular-simple-logger.min.js"></script>
+    <script src="bower_components/angular-ui-router/release/angular-ui-router.js"></script>
     <script src="bower_components/angular-google-maps/dist/angular-google-maps.min.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
-
     <!-- // <script src="ui-bootstrap-custom-build/ui-bootstrap-custom-0.14.3.min.js"></script> -->
-     <script src="ui-bootstrap-custom-build/ui-bootstrap-custom-tpls-0.14.3.js"></script>
-
-    <!-- // <script src="client/controllers.js"></script> -->
-    <!-- // <script src="client/demo.js"></script> -->
-    <!-- // <script src="client/accordion.js"></script> -->
-    <script src="client/controllers.js"></script>
+    <script src="ui-bootstrap-custom-build/ui-bootstrap-custom-tpls-0.14.3.js"></script>
     <script src="client/app.js"></script>
-
-
+    <script src="client/register/register.js"></script>
 
 </head>
 
 
+<body ng-controller="appController" class="body">
 
-<body ng-controller="appController">
-<!--   <nav>
-  <ul class="nav nav-pills pull-right">
-  </nav>
- -->
-<nav class="navbar navbar-default" class="col-sm-5 col-md-6">
-  <div class="container-fluid">
-    <!-- Brand and toggle get grouped for better mobile display -->
-
-
-    <!-- Collect the nav links, forms, and other content for toggling -->
-    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-      <ul class="nav navbar-nav navbar-left">
-        <!-- <li class="active"><a href="#">Link <span class="sr-only">(current)</span></a></li> -->
-        <li><a href="#">Link</a></li>
-        <li class="dropdown">
-          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Login <span class="caret"></span></a>
-          <ul class="dropdown-menu">
-            <li><a href="#">Action</a></li>
-            <li><a href="#">Another action</a></li>
-            <li><a href="#">Something else here</a></li>
-            <li role="separator" class="divider"></li>
-            <li><a href="#">Separated link</a></li>
-            <li role="separator" class="divider"></li>
-            <li><a href="#">One more separated link</a></li>
-          </ul>
-        </li>
-      </ul>
-
-<!--       <form class="navbar-form navbar-left" role="search">
-        <div class="form-group">
-          <input type="text" class="form-control" placeholder="Search">
-        </div>
-        <button type="submit" class="btn btn-default">Submit</button> -->
-      <!-- </form> -->
-      <ul class="nav navbar-nav navbar-right">
-        <!-- <li><a href="#">Link</a></li> -->
-        <li class="dropdown">
-          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Register <span class="caret"></span></a>
-          <ul class="dropdown-menu">
-            <li><a href="#">Action</a></li>
-            <li><a href="#">Another action</a></li>
-            <li><a href="#">Something else here</a></li>
-            <li role="separator" class="divider"></li>
-            <li><a href="#">Separated link</a></li>
-          </ul>
-        </li>
-      </ul>
-    </div><!-- /.navbar-collapse -->
-  </div><!-- /.container-fluid -->
-</nav>
-
-
-
-
-    <div class="bg"></div>
-    <div class="jumbotron">
-      <p class="welcomeTitle">Welcome to Wiggler</p>
-    <p class="lead">
-    </div>
-
-
-<!-- <div ui-view> </div> -->
-
-
-  <div class="container-fluid">
-
-
-    <div class="col-lg-8  text-center">
-      <form>
-        <div>
-          <input type="text" class="form-control input-lg text-center" placeholder="type in a zipcode" ng-model="zipCode">
-        </div>
-        <br>
-        <button type="submit" class="btn btn-primary btn-lg" ng-click="sendZipCode(zipCode); showDetails = true" > Get me to a roof </button>
-      </form>
-      <br>
-    </div>
-    <br>
-
+  <div class="login">
+    <button type="button" class="btn btn-primary"  ui-sref="signup">
+      Login
+    </button>
+  </div>
+  <div class="login">
+    <button type="button" class="btn btn-primary" ui-sref="signup" >
+      Signup
+    </button>
   </div>
 
 
+
+  <div class="bg"> </div>
+
+  <div class="jumbotron" >
+    <p class="lead">
+  </div>
+ <!-- class="how-it-works-overlay"> -->
+  <div class="hero__content-footer hide-sm">
+    <div class="container-fluid" >
+
+      <div class="col-lg-12  text-center" >
+          <form>
+            <div>
+              <input type="text" class="form-control input-lg text-center" placeholder="type in a zipcode" ng-model="zipCode">
+            </div>
+            <br>
+            <button type="submit" class="btn btn-primary btn-lg" ng-click="sendZipCode(zipCode); showDetails = true" > Get me to a roof </button>
+          </form>
+          <br>
+      </div>
+      <br>
+
+    </div>
+  </div>
+
+
+
   <!-- Google Maps -->
+
   <div ng-show="showDetails" class="absolute" class="mythumb" data-offset-top="530"  data-spy="affix">
     <div>
       <ui-gmap-google-map center="map.center" zoom="map.zoom" draggable="true" option="options">
@@ -129,17 +81,17 @@
   </div>
   <!--Google Maps End -->
 
-    <uib-accordion close-others="true" class="col-lg-12 col-md-6 col-sm-6" >
+  <uib-accordion close-others="true" class="col-lg-12 col-md-6 col-sm-6" >
 
-      <uib-accordion-group ng-repeat="bar in list track by $index" class="col-lg-6 text-center">
+    <uib-accordion-group ng-repeat="bar in list track by $index" class="col-lg-6 text-center" >
 
        <uib-accordion-heading>
-       {{ bar.name }}
-       <img src='{{ bar.rating_img_url}}'>
+         {{ bar.name }}
+         <img src='{{ bar.rating_img_url}}'>
        </uib-accordion-heading>
        <div>
-       <img src="{{bar.image_url}}" >
-      </div class="col-md-4">
+         <img src="{{bar.image_url}}" >
+       </div class="col-md-4">
         <p>{{bar.location.address[0]}} <br>
         {{bar.location.city}},
         {{bar.location.state_code}}
@@ -150,63 +102,21 @@
         <button type="button" class="btn btn-default btn-sm" ng-click="addItem()" >Add Item</button>
         <div ng-repeat="item in items"> hey{{item}}</div>
 
-      </uib-accordion-group>
+    </uib-accordion-group>
 
-    </uib-accordion>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+  </uib-accordion>
 
 
 
 
      <script type="text/javascript">
-
       var jumboHeight = $('.jumbotron').outerHeight();
-
       function parallax(){
-          var scrolled = $(window).scrollTop();
-          $('.bg').css('height', (jumboHeight-scrolled) + 'px');
+        var scrolled = $(window).scrollTop();
+        $('.bg').css('height', (jumboHeight-scrolled) + 'px');
       }
-
       $(window).scroll(function(e){
-          parallax();});
-
-
-      // var top = $('.thisone').offset().top;
-      // $('.trigger').click(function () {
-      //     $('.thisone').css('position','');
-      //     $('.left2').toggle('slow',function(){
-      //         top = $('.thisone').offset().top;
-      // });
-
-      // });
-      //  $(document).scroll(function(){
-      //   $('.thisone').css('position','');
-      //   top = $('.thisone').offset().top;
-      //     $('.thisone').css('position','absolute');
-      //     $('.thisone').css('top',Math.max(top,$(document).scrollTop()));
-      //   });
-
+        parallax();});
      </script>
 </body>
 
