@@ -7,7 +7,10 @@ angular.module('register', [])
 		$http({
 			method: "POST",
 			url: "/user/login",
-			data: {email: email, password: pass}
+			data: {email: email, password: pass},
+			headers: {
+        "Content-Type": "application/JSON"
+      }
 		}).then(function(response) {
 			console.log('successful post to login');
 			console.log('response url is ' + response.url);
