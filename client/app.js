@@ -1,7 +1,19 @@
-angular.module('WGLR', ['ui.bootstrap', 'uiGmapgoogle-maps'])
+angular.module('WGLR', ['ui.bootstrap', 'ngAnimate', 'uiGmapgoogle-maps', 'ui.router'])
 
 
-.config(function(uiGmapGoogleMapApiProvider) {
+.config(function(uiGmapGoogleMapApiProvider , $stateProvider, $urlRouterProvider) {
+  $urlRouterProvider.otherwise('/main');
+  $stateProvider
+    .state('main', {
+      url: '/',
+      controller: 'appController',
+      templateUrl: 'homepage.html'
+    })
+    // .state('signup', {
+    //   url: '/signup',
+    //   templateUrl: 'xxxx.html'
+    // })
+
   uiGmapGoogleMapApiProvider.configure({
     key: 'AIzaSyCyhGXFgrHmsvQkerWmO20WwZsvrc9xfjs',
     v: '3.20', //defaults to latest 3.X anyhow
@@ -14,7 +26,7 @@ angular.module('WGLR', ['ui.bootstrap', 'uiGmapgoogle-maps'])
     // Do stuff with your $scope.
     var haha;
 
-    console.log(haha);
+    console.log("haha");
     // Note: Some of the directives require at least something to be defined originally!
     // e.g. $scope.markers = []
 
@@ -83,34 +95,34 @@ angular.module('WGLR', ['ui.bootstrap', 'uiGmapgoogle-maps'])
 // 			templateUrl: 'views/drinksmenu.html'
 // 		}
 })
-.controller('AccordionDemoCtrl1', function ($scope) {
+.controller('AccordionDemoCtrl', function ($scope) {
   $scope.oneAtATime = true;
 
-  $scope.groups = [
-    {
-      title: 'Dynamic Group Header - 1',
-      content: 'Dynamic Group Body - 1'
-    },
-    {
-      title: 'Dynamic Group Header - 2',
-      content: 'Dynamic Group Body - 2'
-    }
-  ];
+  // $scope.groups = [
+  //   {
+  //     title: 'Dynamic Group Header - 1',
+  //     content: 'Dynamic Group Body - 1'
+  //   },
+  //   {
+  //     title: 'Dynamic Group Header - 2',
+  //     content: 'Dynamic Group Body - 2'
+  //   }
+  // ];
 
-  $scope.items = ['Item 1', 'Item 2', 'Item 3'];
+  // $scope.items = ['Item 1', 'Item 2', 'Item 3'];
 
-  $scope.addItem = function() {
-    var newItemNo = $scope.items.length + 1;
-    $scope.items.push('Item ' + newItemNo);
-  };
+  // $scope.addItem = function() {
+  //   var newItemNo = $scope.items.length + 1;
+  //   $scope.items.push('Item ' + newItemNo);
+  // };
 
-  $scope.status = {
-    isFirstOpen: true,
-    isFirstDisabled: false
-  };
+  // $scope.status = {
+  //   isFirstOpen: true,
+  //   isFirstDisabled: false
+  // };
 })
 
-.controller('UibAccordionController1', ['$scope', '$attrs', 'uibAccordionConfig', function($scope, $attrs, accordionConfig) {
+.controller('UibAccordionController', ['$scope', '$attrs', 'uibAccordionConfig', function($scope, $attrs, accordionConfig) {
   // This array keeps track of the accordion groups
   this.groups = [];
 
@@ -146,90 +158,5 @@ angular.module('WGLR', ['ui.bootstrap', 'uiGmapgoogle-maps'])
   };
 }])
 
-// The accordion directive simply sets up the directive controller
-// and adds an accordion CSS class to itself element.
-// .directive('uibAccordion', function() {
-//   return {
-//     controller: 'UibAccordionController',
-//     controllerAs: 'accordion',
-//     transclude: true,
-//     templateUrl: function(element, attrs) {
-//       return attrs.templateUrl || 'uib/template/accordion/accordion.html';
-//     }
-//   };
-// })
 
-// // The accordion-group directive indicates a block of html that will expand and collapse in an accordion
-// .directive('uibAccordionGroup', function() {
-//   return {
-//     require: '^uibAccordion',         // We need this directive to be inside an accordion
-//     transclude: true,              // It transcludes the contents of the directive into the template
-//     replace: true,                // The element containing the directive will be replaced with the template
-//     templateUrl: function(element, attrs) {
-//       return attrs.templateUrl || 'uib/template/accordion/accordion-group.html';
-//     },
-//     scope: {
-//       heading: '@',               // Interpolate the heading attribute onto this scope
-//       isOpen: '=?',
-//       isDisabled: '=?'
-//     },
-//     controller: function() {
-//       this.setHeading = function(element) {
-//         this.heading = element;
-//       };
-//     },
-//     link: function(scope, element, attrs, accordionCtrl) {
-//       accordionCtrl.addGroup(scope);
-
-//       scope.openClass = attrs.openClass || 'panel-open';
-//       scope.panelClass = attrs.panelClass || 'panel-default';
-//       scope.$watch('isOpen', function(value) {
-//         element.toggleClass(scope.openClass, !!value);
-//         if (value) {
-//           accordionCtrl.closeOthers(scope);
-//         }
-//       });
-
-//       scope.toggleOpen = function($event) {
-//         if (!scope.isDisabled) {
-//           if (!$event || $event.which === 32) {
-//             scope.isOpen = !scope.isOpen;
-//           }
-//         }
-//       };
-//     }
-//   };
-// })
-
-// Use accordion-heading below an accordion-group to provide a heading containing HTML
-// .directive('uibAccordionHeading', function() {
-//   return {
-//     transclude: true,   // Grab the contents to be used as the heading
-//     template: '',       // In effect remove this element!
-//     replace: true,
-//     require: '^uibAccordionGroup',
-//     link: function(scope, element, attrs, accordionGroupCtrl, transclude) {
-//       // Pass the heading to the accordion-group controller
-//       // so that it can be transcluded into the right place in the template
-//       // [The second parameter to transclude causes the elements to be cloned so that they work in ng-repeat]
-//       accordionGroupCtrl.setHeading(transclude(scope, angular.noop));
-//     }
-//   };
-// })
-
-// // Use in the accordion-group template to indicate where you want the heading to be transcluded
-// // You must provide the property on the accordion-group controller that will hold the transcluded element
-// .directive('uibAccordionTransclude', function() {
-//   return {
-//     require: '^uibAccordionGroup',
-//     link: function(scope, element, attrs, controller) {
-//       scope.$watch(function() { return controller[attrs.uibAccordionTransclude]; }, function(heading) {
-//         if (heading) {
-//           element.find('span').html('');
-//           element.find('span').append(heading);
-//         }
-//       });
-//     }
-//   };
-// });
 
