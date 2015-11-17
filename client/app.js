@@ -32,7 +32,7 @@ angular.module('WGLR', ['ui.bootstrap', 'ngAnimate', 'uiGmapgoogle-maps', 'ui.ro
       data: {name: "Rush Street", postal_code: '90232'}
     }).then(function(res) {
       console.log(res.data);
-      for(var)
+      // for(var)
     })
   }
   console.log('test');
