@@ -20,22 +20,36 @@
   margin: 130px;
 }
 .angular-google-map-container {
+ float: right;
  height: 400px;
  width: 400px;
+ right: 0px;
+ bottom: 10px;
+ position: fixed;
 }
 
 
-/*.h3 .jumbotron {
-  position: fixed;
-  right: 200px;
-}
-*/
-/*
-.title {
 
-  position: fixed;
-  left: 200px;
+
+
+.mythumb { padding:50px;
+/*border: 1px solid rgb(212, 212, 212);*/
+/*box-shadow: 0px 1px 10px rgba(0, 0, 0, 0.1);*/
+/*background-color:white; width:250px;*/
+}
+/*  #sidebar{
+  margin-bottom:10px;
 }*/
+.likediv {
+  margin-top:100px;
+}
+.affix{
+  top:50px;
+  right: 10px
+}
+.welcomeTitle {
+  margin-left: 330px;
+}
 
 
-/*url('https://jetsettimes.files.wordpress.com/2013/06/uptown-bar-dubai-united-arab-emirates1.jpeg') no-repeat center center;url('https://jetsettimes.files.wordpress.com/2013/06/uptown-bar-dubai-united-arab-emirates1.jpeg') no-repeat center center;*/
+
