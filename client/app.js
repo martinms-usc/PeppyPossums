@@ -21,27 +21,31 @@ angular.module('WGLR', ['ui.bootstrap', 'ngAnimate', 'uiGmapgoogle-maps', 'ui.ro
   });
 })
 
-.controller('menuController', function($scope, $http) {
+// .controller('menuController', function($scope, $http) {
+
+//   // $scope.findMenu();
+// })
+
+.controller('appController', function($scope, $http, uiGmapGoogleMapApi) {
+
+  $scope.list = [];
+  $scope.menu = [];
+
   $scope.findMenu = function(name, postal) {
+    console.log(name, postal)
     return $http({
       method: 'POST',
       url: '/menu',
       headers: {
         "Content-Type": "application/JSON"
       },
-      data: {name: "Rush Street", postal_code: '90232'}
+      data: {name: name, postal_code: postal}
     }).then(function(res) {
       console.log(res.data);
-      // for(var)
+      $scope.menu = res.data;
     })
   }
   console.log('test');
-  $scope.findMenu();
-})
-
-.controller('appController', function($scope, $http, uiGmapGoogleMapApi) {
-
-  $scope.list = [];
 
   $scope.sendZipCode  = function(searchParam) {
     // var params = '{enter query}';
@@ -69,7 +73,7 @@ angular.module('WGLR', ['ui.bootstrap', 'ngAnimate', 'uiGmapgoogle-maps', 'ui.ro
       var sumLat = 0;
       var sumLong = 0;
       var count = 0;
-     
+
       for (var key in $scope.list) {
         var latitude = $scope.list[key].location.coordinate.latitude;
         var longitude = $scope.list[key].location.coordinate.longitude;
@@ -77,7 +81,7 @@ angular.module('WGLR', ['ui.bootstrap', 'ngAnimate', 'uiGmapgoogle-maps', 'ui.ro
         var ratings = $scope.list[key].rating_img_url_small;
         var url = $scope.list[key].url;
         markers.push({id: key, latitude: latitude, longitude: longitude, name: name, url: url, ratings: ratings, show: false });
-        
+
         sumLat += latitude;
         sumLong += longitude;
         ++count;
@@ -88,12 +92,12 @@ angular.module('WGLR', ['ui.bootstrap', 'ngAnimate', 'uiGmapgoogle-maps', 'ui.ro
 
       $scope.map = {center: { latitude: avgLat, longitude: avgLong }, zoom: 10 };
       $scope.markerList = markers;
-  
+
       $scope.onClick = function(marker, eventName, model) {
         console.log("Clicked!");
         model.show = !model.show;
       };
-    
+
       uiGmapGoogleMapApi.then(function(maps) {
         console.log("Working");
       });
@@ -102,7 +106,7 @@ angular.module('WGLR', ['ui.bootstrap', 'ngAnimate', 'uiGmapgoogle-maps', 'ui.ro
     });
   };
 })
-        
+
 .controller('AccordionDemoCtrl', function ($scope) {
   $scope.oneAtATime = true;
 
