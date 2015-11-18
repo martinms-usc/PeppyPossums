@@ -23,7 +23,7 @@ module.exports.downloadMenu = function(req, res, next) {
         },
         body: JSON.stringify({
           "api_key" : "2968d9e099921eda3f7a5ee412ae10cc24ad74e0",
-          "fields" : [ "name", "location", "menus" ],
+          "fields" : [ "name", "location", "menus", "menu_url", "website_url" ],
           "venue_queries" : [
             {
               "name" : req.body.name,
@@ -42,5 +42,5 @@ module.exports.downloadMenu = function(req, res, next) {
             next();
         }
     });
-    
+
 }
