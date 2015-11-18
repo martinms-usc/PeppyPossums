@@ -29,19 +29,46 @@ function queryDB(req, res, next, searchParam, queryParam) {
 		res.bars.push(snapshot.val());
 	})
 	.then(function() {
-
+		console.log('NEXT');
 		next();
 	})
 };
 
 // user queries
 exports.addUser = function(req, res, user, callback) {
-	console.log('adding user');
-	// alternatively : 
-	// var fire = new Firebase('http://rooftopapp.firebaseio.com/users')
-	// fire.push(user);
-	usersRef.push(user);
-	callback(user);
+	// var found = false;
+
+	// usersRef.once('value', function(snapshot) {
+	// 	snapshot.forEach(function(childSnapshot) {
+	// 		var userID = childSnapshot.key();
+	// 		childSnapshot.ref().child('email').once('value', function(snapshot) {
+	// 			var dbEmail = snapshot.val();
+	// 			console.log('(addUser) checking ' + dbEmail);
+	// 			if (dbEmail === user.email) {
+	// 				console.log('(addUser) user email already exists'); 
+	// 				found = true;
+	// 				callback(req, res, null);
+	// 			} else {
+	// 				console.log('(addUser) not a match');
+	// 			}
+	// 		})
+	// 	})
+	// }, function() {
+	// 	console.log('error in addUser');
+	// 	res.send('db error');
+	// })
+	// .then(function() {
+	// 	console.log('(addUserCB) GOT IT into the promise');
+	// 	if (!found) {
+	// 		console.log('(addUser) adding user');
+			usersRef.push(user);
+			callback(req, res, user);
+	// 	} 
+	// 	if (found) {
+	// 		console.log('(addUser) user email already exists'); 
+	// 		res.send('email exists');
+	// 	}
+	// })
 };
 
 exports.findUser = function(req, res, user, callback) {
@@ -50,17 +77,26 @@ exports.findUser = function(req, res, user, callback) {
 	usersRef.orderByChild('email')
 	.equalTo(req.body.email)
 	.on('child_added', function(snapshot) {
-		console.log('User was found: ' + snapshot.val());
+		console.log('User was found: ');
 		found = snapshot.val();
+	}, function() {
+		console.log('error in querying for user');
+		res.send('db error');
 	})
 	.then(function() {
-		console.log('queries.js user was found, running callback');
-		callback(req, res, user, found);
+		console.log('(finduser) queries.js running callback');
+		if (found) {
+			console.log('(finduser) we found ' + found.email);
+			callback(req, res, user, found);
+		} else if (found === null) {
+			console.log('the user is null');
+			res.send('user not found');
+		}
 	})
 };
 
 
-// firebase's user creation method, leave this just in case
+// firebase's user creation method, 
 	// fireproof.createUser({
 	// 	email: req.body.email,
 	// 	password: req.body.password
