@@ -2,6 +2,7 @@
       background-color: #000;
     background-color: rgba(0,0,0,0.6);
 }*/
+
 .bg {
   background: url('https://c1.staticflickr.com/1/768/23102952525_7d751d31e9_o.jpg') no-repeat center center;
   background-color: #000;
@@ -266,6 +267,8 @@ figure.effect-sadie:hover p {
   -webkit-transform: translate3d(0,0,0);
   transform: translate3d(0,0,0);
 }
+
+
 
 
 

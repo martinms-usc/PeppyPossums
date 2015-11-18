@@ -79,8 +79,14 @@ angular.module('WGLR', ['ui.bootstrap', 'ngAnimate', 'uiGmapgoogle-maps', 'ui.ro
         var longitude = $scope.list[key].location.coordinate.longitude;
         var name = $scope.list[key].name;
         var ratings = $scope.list[key].rating_img_url_small;
+        var reviewCount = $scope.list[key].review_count;
         var url = $scope.list[key].url;
+
         markers.push({id: key, latitude: latitude, longitude: longitude, name: name, url: url, ratings: ratings, show: false });
+
+
+        markers.push({id: key, latitude: latitude, longitude: longitude, name: name, url: url, ratings: ratings, reviewCount: reviewCount, show: false });
+        
 
         sumLat += latitude;
         sumLong += longitude;
@@ -105,6 +111,10 @@ angular.module('WGLR', ['ui.bootstrap', 'ngAnimate', 'uiGmapgoogle-maps', 'ui.ro
 
     });
   };
+
+  $scope.mapZoom = function(index) {
+    $scope.map = {center: { latitude: $scope.list[index].location.coordinate.latitude, longitude: $scope.list[index].location.coordinate.longitude }, zoom: 17 };
+  }
 })
 
 .controller('AccordionDemoCtrl', function ($scope) {
