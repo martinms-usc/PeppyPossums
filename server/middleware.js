@@ -51,14 +51,12 @@ exports.processSignup = function(req, res, next) {
 function createSession (req, res, newUser) {
 	console.log('creating session');
 	// if (req.session) {
-		res.send('session created');
 	// }
-
-  // return req.session.regenerate(function() {
-  //   req.session.user = newUser;
-  //   console.log(req.session.user);
-  //   res.send("session created");
-  // });	
+  return req.session.regenerate(function() {
+    req.session.user = newUser;
+    console.log(req.session.user);
+    res.send("session created");
+  });	
 };
 
 exports.checkUser = function(req, res, next){
