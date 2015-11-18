@@ -86,7 +86,7 @@ angular.module('WGLR', ['ui.bootstrap', 'ngAnimate', 'uiGmapgoogle-maps', 'ui.ro
 
 
         markers.push({id: key, latitude: latitude, longitude: longitude, name: name, url: url, ratings: ratings, reviewCount: reviewCount, show: false });
-        
+
 
         sumLat += latitude;
         sumLong += longitude;
