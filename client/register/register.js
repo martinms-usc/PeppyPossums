@@ -28,8 +28,9 @@ angular.module('register', [])
 			} else if (response.data === 'db error') {
 				console.log('database error');
 				$location.path('/signup');
-			} else {
-				console.log('unknown error');
+			} else if (response.data === 'logged in') {
+				console.log('user is already logged in');
+				$location.path('/');
 			}
 		})
 		.catch(function(data, status) {

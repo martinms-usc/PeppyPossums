@@ -7,6 +7,9 @@ exports.validateLogin = function(req, res) {
 	var em = req.body.email;
 	var pass = req.body.password;
 	var user = {email: em, password: pass};
+	// if (req.session) {
+	// 	res.send('logged in');
+	// }
 
 	console.log('finding user: ' + em);
 	query.findUser(req, res, user, loginCallback);
@@ -28,7 +31,7 @@ var loginCallback =	function(req, res, user, foundUser) {
 
 function signupCallback(req, res, user) {
 	if (user === null) {
-		console.log('(signupCB) BINGO cant use that');
+		console.log('(signupCB) cant use that');
 	} else {
 		console.log('(signupCB) new user is ' + user.email);
 		createSession(req, res, user);
@@ -47,11 +50,15 @@ exports.processSignup = function(req, res, next) {
 
 function createSession (req, res, newUser) {
 	console.log('creating session');
-  return req.session.regenerate(function() {
-    req.session.user = newUser;
-    console.log(req.session.user);
-    res.send("session created");
-  });	
+	// if (req.session) {
+		res.send('session created');
+	// }
+
+  // return req.session.regenerate(function() {
+  //   req.session.user = newUser;
+  //   console.log(req.session.user);
+  //   res.send("session created");
+  // });	
 };
 
 exports.checkUser = function(req, res, next){

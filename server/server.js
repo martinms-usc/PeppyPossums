@@ -15,11 +15,6 @@ app.use(bodyParser.json());
 
 app.use(express.static(__dirname + '/..'));
 
-// for every request, log the metadata
-// app.use(function (req, res, next){
-//   console.log('just got the ' + req.method + ' request to ' + req.url);
-//   next();
-// })
 
 app.use(session({
   secret: "white girls love rooftops",
@@ -47,6 +42,7 @@ var userRouter = express.Router();
 //   console.log('###### JUST GOT LOGIN REQUEST #######');
 //   res.sendFile(path.join(__dirname + '../client/register.html'));
 // })
+
 userRouter.post('/login', function(req, res) {
   mid.validateLogin(req, res);
 })
@@ -63,9 +59,12 @@ userRouter.post('/signup', function(req, res) {
 })
 
 userRouter.get('/logout', function(req, res) {
+  console.log('Before destroy ' + req.session.id);
   req.session.destroy(function() {
-    res.redirect('/login');
+    console.log('destroyed')
+    res.send('You\'ve been logged out!');
   })
+  console.log('Session is: ' + req.session);
 })
 
 // userRouter.post('/add', mid.checkUser, function(req, res) {
