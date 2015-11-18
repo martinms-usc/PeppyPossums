@@ -6,7 +6,7 @@ angular.module('WGLR', ['ui.bootstrap', 'ngAnimate', 'uiGmapgoogle-maps', 'ui.ro
     .state('main', {
       url: '/',
       controller: 'appController',
-      templateUrl: 'homepage.html'
+      templateUrl: 'index.html'
     })
     .state('signup', {
       url: '/signup',
@@ -26,7 +26,7 @@ angular.module('WGLR', ['ui.bootstrap', 'ngAnimate', 'uiGmapgoogle-maps', 'ui.ro
 //   // $scope.findMenu();
 // })
 
-.controller('appController', function($scope, $http, uiGmapGoogleMapApi) {
+.controller('appController', function($scope, $http, $location, uiGmapGoogleMapApi) {
 
   $scope.list = [];
   $scope.menu = [];
@@ -111,6 +111,19 @@ angular.module('WGLR', ['ui.bootstrap', 'ngAnimate', 'uiGmapgoogle-maps', 'ui.ro
 
     });
   };
+
+
+  $scope.logout = function() {
+    $http({
+      method: "GET",
+      url: "user/logout",
+    })
+    .then(function(res) {
+      console.log(res.data);
+      $location.path('/signup');
+    })
+  }
+
 
   $scope.mapZoom = function(index) {
     $scope.map = {center: { latitude: $scope.list[index].location.coordinate.latitude, longitude: $scope.list[index].location.coordinate.longitude }, zoom: 17 };
