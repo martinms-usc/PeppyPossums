@@ -17,7 +17,7 @@ app.use(express.static(__dirname + '/..'));
 
 
 app.use(session({
-  secret: "white girls love rooftops",
+  secret: "everyone loves rooftops",
   resave: false,
   saveUninitialized: true
 }));
